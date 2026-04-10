@@ -1,13 +1,28 @@
-export function JobCard () {
+import { useState } from "react"
+
+export function JobCard ({ empleo }) {
+
+     const { titulo, empresa, ubicacion, descripcion } = empleo
+
+     const [isApplied, setIsApplied] = useState(false)
+
+     const buttonClass = isApplied ? 'is-Applied-button' : undefined
+     const buttonText = isApplied ? 'Aplicado' : 'Aplicar'
+
+     function handleApplyClick () {
+        const newApplied = isApplied ? false: true
+        setIsApplied (newApplied)
+     }
+
     return (
         <article>
             <div>
-                <h3>Ingeniero de Software</h3>
-                <small> Empresa | Remoto </small>
-                <p>Descripcion. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.  </p>
+                <h3> {titulo} </h3>
+                <small> {empresa} | {ubicacion} </small>
+                <p> {descripcion} </p>
             </div>
             
-            <button> Aplicar </button>
+            <button onClick={handleApplyClick}  className={buttonClass}> {buttonText} </button>
         </article>
     )
 }

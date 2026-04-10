@@ -1,6 +1,6 @@
 export function Home () {
     return (
-        <main>
+        <main className="main-home-page">
         <section>
           <img src="./background.webp"/>
           <h1>Encuentra el trabajo de tus sueños</h1>
