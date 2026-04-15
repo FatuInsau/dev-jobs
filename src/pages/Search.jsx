@@ -1,6 +1,12 @@
+import { useState } from "react"
 import { JobCard } from "../components/JobCard"
+import { Pagination } from "../components/Pagination"
 
 export function SearchPage() {
+
+    const [ currentPage, setCurrentPage] = useState(1)
+
+    const totalPages = 5
 
     const empleos = [
         {
@@ -81,14 +87,19 @@ export function SearchPage() {
                     </div>
                 </form>
             </section>
-            <section>
+            <section 
+            className="search-result-section">
                 <h2>Resultados de búsqueda</h2>
-                {empleos.map((empleo) => {
+                <div className="jobs-results">
+                    {empleos.map((empleo) => {
                     return (
                         <JobCard empleo={empleo} key={empleo.id} ></JobCard>
                     )
                 })}
+                </div>
+                
             </section>
+            <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage}></Pagination>
         </main>
     )
 }
