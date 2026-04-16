@@ -1,36 +1,20 @@
 import { useState } from "react"
-import { JobCard } from "../components/JobCard"
+import { JobList } from "../components/JobList"
 import { Pagination } from "../components/Pagination"
 
-export function SearchPage() {
+
+export function SearchPage({ empleos }) {
 
     const [ currentPage, setCurrentPage] = useState(1)
 
-    const totalPages = 5
+    const RESULTS_PER_PAGE = 5
 
-    const empleos = [
-        {
-            id: 1,
-            titulo: 'Desarrollador Frontend',
-            empresa: 'Tech Solutions Inc.',
-            ubicacion: 'Remoto',
-            descripcion: 'Buscamos un desarrollador frontend con experiencia en React.',
-        },
-        {
-            id: 2,
-            titulo: 'Ingeniero Backend',
-            empresa: 'Data Systems',
-            ubicacion: 'Madrid',
-            descripcion: 'Experiencia con Node.js y bases de datos.',
-        },
-        {
-            id: 3,
-            titulo: 'Full Stack Developer',
-            empresa: 'StartupCo',
-            ubicacion: 'Barcelona',
-            descripcion: 'Desarrollo completo de aplicaciones web.',
-        },
-    ]
+    const totalPages = Math.ceil(empleos.length / RESULTS_PER_PAGE)
+
+    const pagedResults = empleos.slice(
+        (currentPage - 1) * RESULTS_PER_PAGE, // inicio
+        currentPage * RESULTS_PER_PAGE // fin (no incluido)
+    )
 
     return (
         <main className="main-search-page">
@@ -90,13 +74,7 @@ export function SearchPage() {
             <section 
             className="search-result-section">
                 <h2>Resultados de búsqueda</h2>
-                <div className="jobs-results">
-                    {empleos.map((empleo) => {
-                    return (
-                        <JobCard empleo={empleo} key={empleo.id} ></JobCard>
-                    )
-                })}
-                </div>
+                <JobList empleos={pagedResults}></JobList>
                 
             </section>
             <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage}></Pagination>

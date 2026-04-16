@@ -25,6 +25,7 @@ export function Pagination ({ currentPage = 1, totalPages = 5, onPageChange = ()
     const handlePageClick = (e, page) => {
         e.preventDefault()
         onPageChange(page)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
         
     }
 
