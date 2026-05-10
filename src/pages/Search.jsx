@@ -1,27 +1,44 @@
 import { useState } from "react"
 import { JobList } from "../components/JobList"
 import { Pagination } from "../components/Pagination"
+import { useId } from 'react'
+
+export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
+
+    console.log(pageValues, 'valores de page')
+
+    const idText = useId()
+    const idTechnology = useId()
+    const idLocation = useId()
+    const idExperienceLevel = useId()
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const formData = new FormData(event.target)
+
+    const filters = {
+      search: formData.get(idText),
+      technology: formData.get(idTechnology),
+      location: formData.get(idLocation),
+      experienceLevel: formData.get(idExperienceLevel),
+    }
+
+    onSearch(filters)
+    }
+
+    const handleTextChange = (event) => {
+        const text = event.target.value
+        onTextFilter(text)
+    }
 
 
-export function SearchPage({ empleos }) {
-
-    const [ currentPage, setCurrentPage] = useState(1)
-
-    const RESULTS_PER_PAGE = 5
-
-    const totalPages = Math.ceil(empleos.length / RESULTS_PER_PAGE)
-
-    const pagedResults = empleos.slice(
-        (currentPage - 1) * RESULTS_PER_PAGE, // inicio
-        currentPage * RESULTS_PER_PAGE // fin (no incluido)
-    )
 
     return (
         <main className="main-search-page">
             <section>
                 <h1> Encuentra tu próximo trabajo</h1>
                 <p>Explora miles de oportunidades en el sector tecnológico.</p>
-                <form role="search">
+                <form role="search" onSubmit={handleSubmit}>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
@@ -31,12 +48,12 @@ export function SearchPage({ empleos }) {
                             <path d="M21 21l-6 -6" />
                         </svg>
 
-                        <input type="text" placeholder="Buscar trabajos, empresas o habilidades" />
+                        <input type="text" name={idText} placeholder="Buscar trabajos, empresas o habilidades" onChange={handleTextChange}/>
 
-                        <button>✖︎</button>
+                        <button>Buscar</button>
                     </div>
                     <div>
-                        <select name="" id="">
+                        <select name={idTechnology} id={idTechnology}>
                             <option value="">Tecnología</option>
                             <optgroup label="Tecnologías Populares">
                                 <option value="javascript">JavaScript</option>
@@ -53,31 +70,31 @@ export function SearchPage({ empleos }) {
                             <option value="ruby">Ruby</option>
                             <option value="php">PHP</option>
                         </select>
-                        <select name="" id="">
+                        <select name={idLocation} id={idLocation}>
                             <option value="">Ubicación</option>
                             <option value="remoto">Remoto</option>
                             <option value="cdmx">Ciudad de México</option>
                             <option value="guadalajara">Guadalajara</option>
-            <option value="monterrey">Monterrey</option>
-            <option value="barcelona">Barcelona</option>
+                            <option value="monterrey">Monterrey</option>
+                            <option value="barcelona">Barcelona</option>
                         </select>
-                        <select name="" id="">
+                        <select name={idExperienceLevel} id={idExperienceLevel}>
                             <option value="">Nivel de experiencia</option>
-            <option value="junior">Junior</option>
-            <option value="mid">Mid-level</option>
-            <option value="senior">Senior</option>
-            <option value="lead">Lead</option>
+                            <option value="junior">Junior</option>
+                            <option value="mid">Mid-level</option>
+                            <option value="senior">Senior</option>
+                            <option value="lead">Lead</option>
                         </select>
                     </div>
                 </form>
             </section>
-            <section 
-            className="search-result-section">
+            <section
+                className="search-result-section">
                 <h2>Resultados de búsqueda</h2>
-                <JobList empleos={pagedResults}></JobList>
-                
+                <JobList empleos={empleos}></JobList>
+
             </section>
-            <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage}></Pagination>
+            <Pagination currentPage = {pageValues.currentPage} totalPages = {pageValues.totalPages} onPageChange= {pageValues.setCurrentPage}></Pagination>
         </main>
     )
 }
