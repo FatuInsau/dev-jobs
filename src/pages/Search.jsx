@@ -5,8 +5,6 @@ import { useId } from 'react'
 
 export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
 
-    console.log(pageValues, 'valores de page')
-
     const idText = useId()
     const idTechnology = useId()
     const idLocation = useId()
@@ -14,7 +12,7 @@ export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const formData = new FormData(event.target)
+        const formData = new FormData(e.currentTarget)
 
     const filters = {
       search: formData.get(idText),
@@ -38,7 +36,7 @@ export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
             <section>
                 <h1> Encuentra tu próximo trabajo</h1>
                 <p>Explora miles de oportunidades en el sector tecnológico.</p>
-                <form role="search" onSubmit={handleSubmit}>
+                <form role="search" onChange={handleSubmit}>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
@@ -50,7 +48,7 @@ export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
 
                         <input type="text" name={idText} placeholder="Buscar trabajos, empresas o habilidades" onChange={handleTextChange}/>
 
-                        <button>Buscar</button>
+                        {/* <button>Buscar</button> */}
                     </div>
                     <div>
                         <select name={idTechnology} id={idTechnology}>
