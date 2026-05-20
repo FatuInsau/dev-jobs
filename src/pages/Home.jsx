@@ -2,7 +2,7 @@ export function Home () {
     return (
         <main className="main-home-page">
         <section>
-          <img src="./background.webp"/>
+          <img src="../background.webp"/>
           <h1>Encuentra el trabajo de tus sueños</h1>
         <p>Únete a la comunidad más grande de desarrolladores y encuentra tu próxima oportunidad.</p>
         <form role="search">

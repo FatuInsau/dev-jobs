@@ -1,8 +1,10 @@
 import { useState } from "react"
+import { Routes, Route } from 'react-router'
 import { Header } from "./components/Header"
 import { Footer } from "./components/Footer"
 import { SearchPage } from "./pages/Search"
 import { Home } from "./pages/Home"
+import { NotFoundPage } from "./pages/NotFoundPage"
 import jobsData from "./data.json"
 
 function App() {
@@ -65,8 +67,11 @@ function App() {
   return (
     <>
     <Header></Header>
-    <SearchPage empleos={pagedResults} onSearch={handleSearch} pageValues={pageValues} onTextFilter={handleTextFilter}></SearchPage>
-    {/* <Home></Home> */}
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/search" element={<SearchPage empleos={pagedResults} onSearch={handleSearch} pageValues={pageValues} onTextFilter={handleTextFilter} />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
     <Footer></Footer>
     </>
   )
