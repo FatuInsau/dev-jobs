@@ -1,11 +1,20 @@
+import { Link } from '../components/Link'
+
+
 export function Home () {
+
+  const handleSearch = (event) => {
+    event.preventDefault()
+     const formData = new FormData(event.target)
+      const searchTerm = formData.get('search')
+  }
     return (
         <main className="main-home-page">
         <section>
           <img src="../background.webp"/>
           <h1>Encuentra el trabajo de tus sueños</h1>
         <p>Únete a la comunidad más grande de desarrolladores y encuentra tu próxima oportunidad.</p>
-        <form role="search">
+        {/* <form role="search" onSubmit={handleSearch}>
           <div>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
@@ -19,7 +28,8 @@ export function Home () {
 
             <button type="submit">Buscar</button>
           </div>
-        </form>
+        </form> */}
+        <Link href='/search'><button>Buscar Trabajo</button></Link>
         </section>
         <section>
           <header>
