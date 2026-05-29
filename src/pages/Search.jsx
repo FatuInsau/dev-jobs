@@ -3,7 +3,7 @@ import { JobList } from "../components/JobList"
 import { Pagination } from "../components/Pagination"
 import { useId } from 'react'
 
-export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
+export function SearchPage({ onSearch, onTextFilter, pageValues, empleos, loading }) {
 
     const idText = useId()
     const idTechnology = useId()
@@ -70,6 +70,7 @@ export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
             <section
                 className="search-result-section">
                 <h2>Resultados de búsqueda</h2>
+                { loading ? <p>Cargando empleos...</p> : null}
                 <JobList empleos={empleos}></JobList>
 
             </section>
