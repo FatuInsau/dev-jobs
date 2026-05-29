@@ -1,12 +1,21 @@
 import { Link } from '../components/Link'
+import { useRouter } from '../hooks/useRouter'
 
 
 export function Home () {
+
+  const { navigateTo } = useRouter()
 
   const handleSearch = (event) => {
     event.preventDefault()
      const formData = new FormData(event.target)
       const searchTerm = formData.get('search')
+
+      const url = searchTerm
+      ? `/search?text=${encodeURIComponent(searchTerm)}`
+      : '/search'
+
+      navigateTo(url)
   }
     return (
         <main className="main-home-page">
@@ -14,7 +23,7 @@ export function Home () {
           <img src="../background.webp"/>
           <h1>Encuentra el trabajo de tus sueños</h1>
         <p>Únete a la comunidad más grande de desarrolladores y encuentra tu próxima oportunidad.</p>
-        {/* <form role="search" onSubmit={handleSearch}>
+        <form role="search" onSubmit={handleSearch}>
           <div>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
@@ -24,12 +33,12 @@ export function Home () {
               <path d="M21 21l-6 -6" />
             </svg>
 
-            <input type="text" name="search" required placeholder="Buscar empleos por título, habilidad o empresa" />
+            <input type="text" name="search" placeholder="Buscar empleos por título, habilidad o empresa" />
 
             <button type="submit">Buscar</button>
           </div>
-        </form> */}
-        <Link href='/search'><button>Buscar Trabajo</button></Link>
+        </form>
+        {/* <Link href='/search'><button>Buscar Trabajo</button></Link> */}
         </section>
         <section>
           <header>

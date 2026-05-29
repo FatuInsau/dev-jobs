@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useSearchForm } from "../hooks/useSearchForm" 
 import { JobList } from "../components/JobList"
 import { Pagination } from "../components/Pagination"
 import { useId } from 'react'
@@ -10,26 +10,7 @@ export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
     const idLocation = useId()
     const idExperienceLevel = useId()
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const formData = new FormData(e.currentTarget)
-
-    const filters = {
-      search: formData.get(idText),
-      technology: formData.get(idTechnology),
-      location: formData.get(idLocation),
-      experienceLevel: formData.get(idExperienceLevel),
-    }
-
-    onSearch(filters)
-    }
-
-    const handleTextChange = (event) => {
-        const text = event.target.value
-        onTextFilter(text)
-    }
-
-
+    const { handleSubmit, handleTextChange } = useSearchForm({ idText, idTechnology, idLocation, idExperienceLevel, onSearch, onTextFilter})
 
     return (
         <main className="main-search-page">
