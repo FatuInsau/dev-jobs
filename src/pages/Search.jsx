@@ -2,18 +2,27 @@ import { useSearchForm } from "../hooks/useSearchForm"
 import { JobList } from "../components/JobList"
 import { Pagination } from "../components/Pagination"
 import { useId } from 'react'
+import { useFilters } from "../hooks/useFilters"
 
-export function SearchPage({ onSearch, onTextFilter, pageValues, empleos, loading }) {
+export function SearchPage() {
 
     const idText = useId()
     const idTechnology = useId()
     const idLocation = useId()
     const idExperienceLevel = useId()
 
+    const { loading, total,  pageValues, jobs, handleTextFilter, handleSearch } = useFilters()
+
+    const onTextFilter = handleTextFilter
+    const onSearch = handleSearch
+
     const { handleSubmit, handleTextChange } = useSearchForm({ idText, idTechnology, idLocation, idExperienceLevel, onSearch, onTextFilter})
+
+    const title = loading ? 'Cargando...' : total === 0 ? 'No se encontraron resultados' : `Resultado: ${total}, Página ${pageValues.currentPage} - DevJobs`
 
     return (
         <main className="main-search-page">
+            <title>{title}</title>
             <section>
                 <h1> Encuentra tu próximo trabajo</h1>
                 <p>Explora miles de oportunidades en el sector tecnológico.</p>
@@ -28,8 +37,6 @@ export function SearchPage({ onSearch, onTextFilter, pageValues, empleos, loadin
                         </svg>
 
                         <input type="text" name={idText} placeholder="Buscar trabajos, empresas o habilidades" onChange={handleTextChange}/>
-
-                        {/* <button>Buscar</button> */}
                     </div>
                     <div>
                         <select name={idTechnology} id={idTechnology}>
@@ -71,7 +78,7 @@ export function SearchPage({ onSearch, onTextFilter, pageValues, empleos, loadin
                 className="search-result-section">
                 <h2>Resultados de búsqueda</h2>
                 { loading ? <p>Cargando empleos...</p> : null}
-                <JobList empleos={empleos}></JobList>
+                <JobList empleos={jobs}></JobList>
 
             </section>
             <Pagination currentPage = {pageValues.currentPage} totalPages = {pageValues.totalPages} onPageChange= {pageValues.setCurrentPage}></Pagination>

@@ -17,8 +17,11 @@ export function Home () {
 
       navigateTo(url)
   }
+
+  const title = 'DevJobs'
     return (
         <main className="main-home-page">
+          <title>{title}</title>
         <section>
           <img src="../background.webp"/>
           <h1>Encuentra el trabajo de tus sueños</h1>
