@@ -1,7 +1,7 @@
 import { useSearchForm } from "../hooks/useSearchForm" 
 import { JobList } from "../components/JobList"
 import { Pagination } from "../components/Pagination"
-import { useId } from 'react'
+import { useId, useRef } from 'react'
 import { useFilters } from "../hooks/useFilters"
 
 export function SearchPage() {
@@ -10,6 +10,7 @@ export function SearchPage() {
     const idTechnology = useId()
     const idLocation = useId()
     const idExperienceLevel = useId()
+    const inputRef = useRef()
 
     const { loading, total,  pageValues, jobs, handleTextFilter, handleSearch } = useFilters()
 
@@ -19,6 +20,12 @@ export function SearchPage() {
     const { handleSubmit, handleTextChange } = useSearchForm({ idText, idTechnology, idLocation, idExperienceLevel, onSearch, onTextFilter})
 
     const title = loading ? 'Cargando...' : total === 0 ? 'No se encontraron resultados' : `Resultado: ${total}, Página ${pageValues.currentPage} - DevJobs`
+
+    const handleClearInput = (event) => {
+        event.preventDefault()
+        inputRef.current.value=''
+        onTextFilter('')
+    }
 
     return (
         <main className="main-search-page">
@@ -36,7 +43,10 @@ export function SearchPage() {
                             <path d="M21 21l-6 -6" />
                         </svg>
 
-                        <input type="text" name={idText} placeholder="Buscar trabajos, empresas o habilidades" onChange={handleTextChange}/>
+                        <input type="text" ref={inputRef} name={idText} placeholder="Buscar trabajos, empresas o habilidades" onChange={handleTextChange}/>
+                        <button onClick={handleClearInput}>
+           ✖︎
+          </button>
                     </div>
                     <div>
                         <select name={idTechnology} id={idTechnology}>

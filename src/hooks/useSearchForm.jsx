@@ -1,12 +1,17 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 
 export function useSearchForm ({ idText, idTechnology, idLocation, idExperienceLevel, onSearch, onTextFilter }) {
 
+    const timeoutId = useRef(null)
     const [searchText, setSearchText] = useState('')
 
      const handleSubmit = (e) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
+
+        if (event.target.name === idText) {
+            return
+        }
 
     const filters = {
       search: formData.get(idText),
@@ -21,7 +26,13 @@ export function useSearchForm ({ idText, idTechnology, idLocation, idExperienceL
     const handleTextChange = (event) => {
         const text = event.target.value
         setSearchText(text)
-        onTextFilter(text)
+        if(timeoutId.current) {
+            clearTimeout(timeoutId.current)
+        }
+        timeoutId.current = setTimeout(()=>{
+            onTextFilter(text)
+        }, 500)
+      
     }
 
     return {
