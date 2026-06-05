@@ -1,38 +1,43 @@
-import { useState } from "react"
+import { useSearchForm } from "../hooks/useSearchForm" 
 import { JobList } from "../components/JobList"
 import { Pagination } from "../components/Pagination"
-import { useId } from 'react'
+import { useId, useRef } from 'react'
+import { useFilters } from "../hooks/useFilters"
 
-export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
+export function SearchPage() {
 
     const idText = useId()
     const idTechnology = useId()
     const idLocation = useId()
     const idExperienceLevel = useId()
+    const inputRef = useRef()
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const formData = new FormData(e.currentTarget)
+    const { 
+        loading, 
+        total,  
+        pageValues, 
+        jobs, 
+        handleTextFilter, 
+        handleSearch, 
+        textToFilter,
+        filters } = useFilters()
 
-    const filters = {
-      search: formData.get(idText),
-      technology: formData.get(idTechnology),
-      location: formData.get(idLocation),
-      experienceLevel: formData.get(idExperienceLevel),
+    const onTextFilter = handleTextFilter
+    const onSearch = handleSearch
+
+    const { handleSubmit, handleTextChange } = useSearchForm({ idText, idTechnology, idLocation, idExperienceLevel, onSearch, onTextFilter})
+
+    const title = loading ? 'Cargando...' : total === 0 ? 'No se encontraron resultados' : `Resultado: ${total}, Página ${pageValues.currentPage} - DevJobs`
+
+    const handleClearInput = (event) => {
+        event.preventDefault()
+        inputRef.current.value=''
+        onTextFilter('')
     }
-
-    onSearch(filters)
-    }
-
-    const handleTextChange = (event) => {
-        const text = event.target.value
-        onTextFilter(text)
-    }
-
-
 
     return (
         <main className="main-search-page">
+            <title>{title}</title>
             <section>
                 <h1> Encuentra tu próximo trabajo</h1>
                 <p>Explora miles de oportunidades en el sector tecnológico.</p>
@@ -46,12 +51,14 @@ export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
                             <path d="M21 21l-6 -6" />
                         </svg>
 
-                        <input type="text" name={idText} placeholder="Buscar trabajos, empresas o habilidades" onChange={handleTextChange}/>
-
-                        {/* <button>Buscar</button> */}
+                        <input type="text"
+                        defaultValue={textToFilter} ref={inputRef} name={idText} placeholder="Buscar trabajos, empresas o habilidades" onChange={handleTextChange}/>
+                        <button onClick={handleClearInput}>
+           ✖︎
+          </button>
                     </div>
                     <div>
-                        <select name={idTechnology} id={idTechnology}>
+                        <select name={idTechnology} id={idTechnology} defaultValue={filters.technology}>
                             <option value="">Tecnología</option>
                             <optgroup label="Tecnologías Populares">
                                 <option value="javascript">JavaScript</option>
@@ -68,7 +75,7 @@ export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
                             <option value="ruby">Ruby</option>
                             <option value="php">PHP</option>
                         </select>
-                        <select name={idLocation} id={idLocation}>
+                        <select name={idLocation} defaultValue={filters.location} id={idLocation}>
                             <option value="">Ubicación</option>
                             <option value="remoto">Remoto</option>
                             <option value="cdmx">Ciudad de México</option>
@@ -76,7 +83,8 @@ export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
                             <option value="monterrey">Monterrey</option>
                             <option value="barcelona">Barcelona</option>
                         </select>
-                        <select name={idExperienceLevel} id={idExperienceLevel}>
+                        <select name={idExperienceLevel}
+                        defaultValue={filters.experienceLevel} id={idExperienceLevel}>
                             <option value="">Nivel de experiencia</option>
                             <option value="junior">Junior</option>
                             <option value="mid">Mid-level</option>
@@ -89,7 +97,8 @@ export function SearchPage({ onSearch, onTextFilter, pageValues, empleos }) {
             <section
                 className="search-result-section">
                 <h2>Resultados de búsqueda</h2>
-                <JobList empleos={empleos}></JobList>
+                { loading ? <p>Cargando empleos...</p> : null}
+                <JobList empleos={jobs}></JobList>
 
             </section>
             <Pagination currentPage = {pageValues.currentPage} totalPages = {pageValues.totalPages} onPageChange= {pageValues.setCurrentPage}></Pagination>
