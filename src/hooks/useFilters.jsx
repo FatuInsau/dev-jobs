@@ -1,18 +1,31 @@
 import { useState, useEffect } from "react"
-import jobsData from "../data.json"
+import { useRouter } from './useRouter'
+
 
 export function useFilters() {
 
-    const [currentPage, setCurrentPage] = useState(1)
-    const [textToFilter, setTextToFilter] = useState('')
-    const [filters, setFilters] = useState({
-        technology: '',
-        location: '',
-        experienceLevel: '',
+    const [currentPage, setCurrentPage] = useState(() => {
+        const params = new URLSearchParams(window.location.search)
+        const page = Number(params.get('page'))
+        // se puede chequear que no pongan numeros negativos tmb y otros
+        return Number.isNaN(page) ? page : 1
+    })
+    const [textToFilter, setTextToFilter] = useState(() => {
+        const params = new URLSearchParams(window.location.search)
+        return params.get('text') || ''
+    })
+    const [filters, setFilters] = useState(()=>{
+        const params = new URLSearchParams(window.location.search)
+        return {
+            technology: params.get('technology') || '',
+        location: params.get('type') || '',
+        experienceLevel: params.get('level') || '',
+        }
     })
     const [jobs, setJobs] = useState([])
     const [total, setTotal] = useState(0)
     const [loading, setLoading] = useState(true)
+    const { navigateTo } = useRouter()
 
     useEffect(() => {
         setCurrentPage(1)
@@ -79,6 +92,23 @@ export function useFilters() {
         setCurrentPage: setCurrentPage,
     }
 
+    useEffect(()=>{
+        const params = new URLSearchParams()
+        if (textToFilter) params.append('text', textToFilter)
+        if (filters.technology) params.append('technology', filters.technology)
+        if (filters.location) params.append('type', filters.location)
+        if (filters.experienceLevel) params.append('level', filters.experienceLevel)
+
+        if (currentPage>1) params.append('page',currentPage)
+
+        const newUrl = params.toString()
+        ? `${window.location.pathname}?${params.toString()}`
+        :window.location.pathname
+
+        navigateTo(newUrl)
+
+    },[filters, currentPage, textToFilter, navigateTo])
+
     return {
         loading,
         jobs,
@@ -86,6 +116,8 @@ export function useFilters() {
         handlePageChange,
         handleSearch,
         handleTextFilter,
-        pageValues
+        pageValues,
+        textToFilter,
+        filters
     }
 }

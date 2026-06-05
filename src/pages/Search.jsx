@@ -12,7 +12,15 @@ export function SearchPage() {
     const idExperienceLevel = useId()
     const inputRef = useRef()
 
-    const { loading, total,  pageValues, jobs, handleTextFilter, handleSearch } = useFilters()
+    const { 
+        loading, 
+        total,  
+        pageValues, 
+        jobs, 
+        handleTextFilter, 
+        handleSearch, 
+        textToFilter,
+        filters } = useFilters()
 
     const onTextFilter = handleTextFilter
     const onSearch = handleSearch
@@ -43,13 +51,14 @@ export function SearchPage() {
                             <path d="M21 21l-6 -6" />
                         </svg>
 
-                        <input type="text" ref={inputRef} name={idText} placeholder="Buscar trabajos, empresas o habilidades" onChange={handleTextChange}/>
+                        <input type="text"
+                        defaultValue={textToFilter} ref={inputRef} name={idText} placeholder="Buscar trabajos, empresas o habilidades" onChange={handleTextChange}/>
                         <button onClick={handleClearInput}>
            ✖︎
           </button>
                     </div>
                     <div>
-                        <select name={idTechnology} id={idTechnology}>
+                        <select name={idTechnology} id={idTechnology} defaultValue={filters.technology}>
                             <option value="">Tecnología</option>
                             <optgroup label="Tecnologías Populares">
                                 <option value="javascript">JavaScript</option>
@@ -66,7 +75,7 @@ export function SearchPage() {
                             <option value="ruby">Ruby</option>
                             <option value="php">PHP</option>
                         </select>
-                        <select name={idLocation} id={idLocation}>
+                        <select name={idLocation} defaultValue={filters.location} id={idLocation}>
                             <option value="">Ubicación</option>
                             <option value="remoto">Remoto</option>
                             <option value="cdmx">Ciudad de México</option>
@@ -74,7 +83,8 @@ export function SearchPage() {
                             <option value="monterrey">Monterrey</option>
                             <option value="barcelona">Barcelona</option>
                         </select>
-                        <select name={idExperienceLevel} id={idExperienceLevel}>
+                        <select name={idExperienceLevel}
+                        defaultValue={filters.experienceLevel} id={idExperienceLevel}>
                             <option value="">Nivel de experiencia</option>
                             <option value="junior">Junior</option>
                             <option value="mid">Mid-level</option>
