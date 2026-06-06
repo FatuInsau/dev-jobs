@@ -4,6 +4,7 @@ import { Footer } from "./components/Footer"
 import { SearchPage } from "./pages/Search"
 import { Home } from "./pages/Home"
 import { NotFoundPage } from "./pages/NotFoundPage"
+import { JobDetail } from './pages/JobDetail'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/search" element={<SearchPage />} />
+      <Route path='/jobs/:jobId' element={<JobDetail />}/>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
     <Footer></Footer>
