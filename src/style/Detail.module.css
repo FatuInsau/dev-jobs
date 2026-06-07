@@ -1,0 +1,100 @@
+.jobDetail {
+    padding: 0 2rem;
+    max-width: 64rem;
+    margin: 0 auto;
+}
+
+nav {
+    font-size: 0.875rem;
+    
+    margin-bottom: 2rem;
+
+    a {
+        color: var(--text-muted);
+    }
+
+    .separador {
+        margin: 0 0.5rem;
+        color: var(--text-muted);
+    }
+}
+
+header {
+    margin-bottom: 2rem;
+
+    h1 {
+        font-size: 2.25rem;
+        font-weight: bold;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+    }
+}
+
+.applyButton {
+  width: 100%;
+  background: #09f;
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  margin-bottom: 3rem;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+section {
+    margin-bottom: 3rem;
+
+    h2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    div {
+        color: var(--text-secondary);
+    }
+
+    li {
+        margin-left: 1.5rem;
+    }
+}
+
+.loading,
+.error {
+    padding-block: 5rem;
+    text-align: center;
+
+    p {
+         color: var(--text-muted);
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    button {
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+
+    button:hover {
+        text-decoration: underline;
+    }
+}
+
+
+
+
