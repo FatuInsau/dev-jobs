@@ -68,6 +68,7 @@ export function JobDetail () {
 
     return (
         <div className={styles.jobDetail}>
+            <title>{job.titulo}</title>
             <div>
                 <nav>
                     <Link href='/search'>
