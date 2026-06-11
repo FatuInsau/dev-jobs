@@ -11,6 +11,7 @@
   --primary-hover: #59D8E6;
   --primary-light: #0EEAFF;
   --text-primary: #ffffff;
+  --text-secondary: #e7ebf0;
   --text-muted: #91a5b0;
   --input: #0c2c3a;
   --border: rgba(255, 255, 255, 0.1);
@@ -65,7 +66,7 @@ header {
   border-bottom: solid 0.1rem var(--primary) ;
 
   a {
-    &:hover, &:focus {
+    &:hover {
       color: var(--primary-hover);
       outline: none;
     }
@@ -400,4 +401,9 @@ nav.pagination-nav {
   margin: 1rem;
   border: 1px solid rgba(255, 255, 255, .3);
   border-radius: 1rem;
+}
+
+.nav-link-active {
+  color: var(--text-muted);
+  pointer-events: none;
 }

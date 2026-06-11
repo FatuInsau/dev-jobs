@@ -8,8 +8,13 @@ export function useRouter () {
         navigate(path)
     }
 
+    function goBack() {
+    navigate(-1)
+  }
+
     return {
         currentPath: location.pathname,
-        navigateTo
+        navigateTo,
+        goBack
     }
 }

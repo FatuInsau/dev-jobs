@@ -1,5 +1,6 @@
 import { Link } from "../components/Link"
-export function NotFoundPage () {
+
+export default function NotFoundPage () {
   return (
     <>
     <title>Error al cargar</title>

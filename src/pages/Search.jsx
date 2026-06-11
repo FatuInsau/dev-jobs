@@ -4,7 +4,7 @@ import { Pagination } from "../components/Pagination"
 import { useId, useRef } from 'react'
 import { useFilters } from "../hooks/useFilters"
 
-export function SearchPage() {
+export default function SearchPage() {
 
     const idText = useId()
     const idTechnology = useId()

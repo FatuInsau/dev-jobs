@@ -2,7 +2,7 @@ import { Link } from '../components/Link'
 import { useRouter } from '../hooks/useRouter'
 
 
-export function Home () {
+export default function Home () {
 
   const { navigateTo } = useRouter()
 
