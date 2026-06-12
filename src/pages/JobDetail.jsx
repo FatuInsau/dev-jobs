@@ -20,7 +20,7 @@ function JobSection ({ title, content }) {
     )
 }
 
-export default function JobDetail () {
+export default function JobDetail ({ isLoggedIn }) {
     const { jobId } = useParams()
     const { navigateTo } = useRouter()
 
@@ -77,16 +77,17 @@ export default function JobDetail () {
                     <span>{job.titulo}</span>
                 </nav>
             </div>
-            <header>
+            <header className={styles.header}>
                 <h1>
                     {job.titulo}
                 </h1>
                 <p>{job.empresa}· {job.ubicacion}</p>
             </header>
 
-            <button className={styles.applyButton}>
-                Aplicar ahora
+            <button disabled={!isLoggedIn} className={styles.applyButton}>
+                {isLoggedIn ? 'Aplicar ahora' : 'Inicia sesión para poder aplicar'}
             </button>
+
             <JobSection title='Descripción del puesto' content={job.content.description} />
             <JobSection title='Responsabilidades' content={job.content.responsibilities} />
             <JobSection title='Requisitos' content={job.content.requirements} />

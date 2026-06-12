@@ -1,13 +1,12 @@
 .jobDetail {
-    padding: 0 2rem;
+    padding: 2rem 2rem 0 2rem;
     max-width: 64rem;
     margin: 0 auto;
 }
 
 nav {
     font-size: 0.875rem;
-    
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 
     a {
         color: var(--text-muted);
@@ -19,7 +18,7 @@ nav {
     }
 }
 
-header {
+.header {
     margin-bottom: 2rem;
 
     h1 {
@@ -46,6 +45,10 @@ header {
   margin-bottom: 3rem;
   transition: background 0.2s;
   cursor: pointer;
+
+  &:disabled {
+    background-color: var(--primary);
+  }
 }
 
 section {
