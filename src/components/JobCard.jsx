@@ -1,20 +1,29 @@
 import { useState } from "react"
 import { Link } from "./Link"
 import  styles from '../style/JobCard.module.css'
+import { FavoriteButton } from "./FavoriteButton"
+import { useAuthStore } from '../store/authStore'
 
-export function JobCard ({ empleo }) {
+function JobCardApplyButton ({ jobId }) {
 
-     const { titulo, empresa, ubicacion, descripcion, id } = empleo
+    const [isApplied, setIsApplied] = useState(false)
+    const { isLoggedIn } = useAuthStore()
 
-     const [isApplied, setIsApplied] = useState(false)
-
-     const buttonClass = isApplied ? 'is-Applied-button' : undefined
+    const buttonClass = isApplied ? 'is-Applied-button' : undefined
      const buttonText = isApplied ? 'Aplicado' : 'Aplicar'
 
      function handleApplyClick () {
-        const newApplied = isApplied ? false: true
-        setIsApplied (newApplied)
+        setIsApplied (true)
      }
+
+    return (
+        <button disabled={!isLoggedIn} onClick={handleApplyClick}  className={buttonClass}> {buttonText} </button>
+    )
+}
+
+export function JobCard ({ empleo }) {
+
+    const { titulo, empresa, ubicacion, descripcion, id } = empleo
 
     return (
         <article>
@@ -25,7 +34,9 @@ export function JobCard ({ empleo }) {
             </div>
             <div className={styles.actions}>
                 <Link className={styles.details} href={`/jobs/${id}`} >Ver detalles</Link>
-                <button onClick={handleApplyClick}  className={buttonClass}> {buttonText} </button>
+                < JobCardApplyButton jobId={id}/>
+                <FavoriteButton jobId={id} />
+                
             </div>
         </article>
     )

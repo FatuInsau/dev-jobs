@@ -1,27 +1,37 @@
 import { create } from 'zustand'
 
 export const useFavoritesStore = create((set, get) => ({
+  // Estado
   favorites: [],
 
-  addFavorite: (jobId) =>
-    set((state) => ({
-      favorites: state.favorites.includes(jobId) ? state.favorites : [...state.favorites, jobId],
-    })),
+  clearFavorites: () => {
+    set({ favorites: [] })
+  },
 
-  removeFavorite: (jobId) =>
+  // Acciones
+  addFavorite: (jobId) => {
     set((state) => ({
-      favorites: state.favorites.filter((id) => id !== jobId),
-    })),
+      favorites: state.favorites.includes(jobId)
+        ? state.favorites
+        : [...state.favorites, jobId]
+    }))
+  },
+
+  removeFavorite: (jobId) => {
+    set((state) => ({
+      favorites: state.favorites.filter((id) => id !== jobId)
+    }))
+  },
 
   isFavorite: (jobId) => {
-    const { favorites } = get()
-    return favorites.includes(jobId)
+    return get().favorites.includes(jobId)
   },
 
   toggleFavorite: (jobId) => {
-    const { isFavorite, addFavorite, removeFavorite } = get()
-    isFavorite(jobId) ? removeFavorite(jobId) : addFavorite(jobId)
+    const { addFavorite, removeFavorite, isFavorite } = get()
+    const isFav = isFavorite(jobId)
+    isFav ? removeFavorite(jobId) : addFavorite(jobId)
   },
 
-  favoritesCount: () => get().favorites.length,
+  countFavorites: () => get().favorites.length
 }))

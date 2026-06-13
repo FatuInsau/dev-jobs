@@ -5,6 +5,7 @@ import { Link } from '../components/Link'
 import snarkdown from "snarkdown"
 import styles from '../style/Detail.module.css'
 import { useAuthStore } from "../store/authStore"
+import { FavoriteButton } from "../components/FavoriteButton" 
 
 function JobSection ({ title, content }) {
     const html = snarkdown(content)
@@ -96,6 +97,8 @@ export default function JobDetail () {
             </header>
 
             <DetailApplyButton />
+
+            <FavoriteButton jobId={jobId} />
 
             <JobSection title='Descripción del puesto' content={job.content.description} />
             <JobSection title='Responsabilidades' content={job.content.responsibilities} />
